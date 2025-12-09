@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AiHome | О продукте</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .header__content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .logo__icon {
+            font-size: 32px;
+            font-weight: 900;
+            font-style: italic;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        /* Розовое пятнышко только для десктопа */
+        @media (min-width: 769px) {
+            nav a::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 0;
+                height: 0;
+                background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%);
+                border-radius: 50%;
+                transition: all 0.4s ease;
+                z-index: -1;
+                opacity: 0;
+            }
+
+            nav a:hover::before {
+                width: 120px;
+                height: 120px;
+                opacity: 1;
+            }
+
+            nav a:hover {
+                color: #a855f7;
+            }
+        }
+
+        nav a.active {
+            color: #a855f7;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .burger span {
+            width: 30px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Purple glow effect */
+        .glow-bg {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 60%);
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Main content */
+        main {
+            position: relative;
+            z-index: 10;
+            padding: 60px 0;
+            padding-bottom: 120px;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            max-width: 800px;
+        }
+
+        .image-container {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Стили для вставленных изображений */
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Placeholder текст когда нет изображения */
+        .image-placeholder::after {
+            content: 'Вставьте сюда своё изображение';
+            position: absolute;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .image-placeholder:has(img)::after {
+            display: none;
+        }
+
+        /* Features list */
+        .features-list {
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            margin-bottom: 40px;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            background: linear-gradient(to top, #000 0%, transparent 100%);
+            z-index: 10;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: #0a0a0a;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                transition: right 0.3s ease;
+                z-index: 100;
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav a {
+                font-size: 24px;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            h1 {
+                font-size: 36px;
+                margin-bottom: 40px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .glow-bg {
+                width: 500px;
+                height: 500px;
+            }
+
+            .image-placeholder {
+                height: 300px;
+            }
+
+            .section {
+                margin-bottom: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .logo__icon {
+                font-size: 24px;
+            }
+
+            .section p,
+            .feature-item p {
+                font-size: 14px;
+            }
+
+            .feature-item h3 {
+                font-size: 18px;
+            }
+
+            .image-placeholder {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glow-bg"></div>
+
+    <header>
+        <div class="container">
+            <div class="header__content">
+                <a href="#" class="logo">
+                    <span class="logo__icon">m</span>
+                    <span>AiHome | Предпросмотр</span>
+                </a>
+                <nav id="nav">
+                    <a href="{{ url_for('about_product') }}" class="active">О продукте</a>
+                    <a href="{{ url_for('drafts') }}">Наработки</a>
+                    <a href="{{ url_for('plans') }}">Планируем</a>
+                    <a href="{{ url_for('contact') }}">Контакты</a>
+                    </nav>
+                <div class="burger" id="burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>О продукте</h1>
+
+            <div class="section">
+                <p>Мы AiHome - одна из первых систем умного<br>
+                    дома с концепцией искусственного<br>
+                    интеллекта, который запоминает ваши<br>
+                    привычки, создавая идеальные условия<br>
+                    для жизни. Просто живите, ваш дом<br>
+                    всё сделает сам.</p>
+            </div>
+
+            <div class="section">
+                <h2>Блок - Визуал</h2>
+                <p>Минималистичный дизайн на маленьком<br>
+                    дисплее, которая будет вписываться<br>
+                    под многие стили дизайна интерьера.</p>
+            </div>
+
+            <div class="section">
+                <h2>Блок - Наше видение.<br>Что мы меняем?</h2>
+                <p>Мы устали от "умных" домов.<br>
+                    Обычная автоматизация составляет вас<br>
+                    подстраиваться под технологии. Вы просто<br>
+                    становитесь оператором умного<br>
+                    дома или квартиры.</p>
+
+                <div class="image-container">
+                    <div class="image-placeholder">
+                        <!-- Вставь сюда свою картинку галактики -->
+                        <img src="/static/first.jpg" alt="Galaxy" >
+                    </div>
+
+
+                <p style="margin-top: 40px;">Мы же в свою очередь хотим,<br>
+                    чтобы технологии подчинялись<br>
+                    вам!</p>
+
+                <p style="margin-top: 20px;">AiHome не просто исполняет, но и изучает,<br>
+                    запоминает, адаптируется. Алгоритмы<br>
+                    анализируют параметры вашей жизни,<br>
+                    создавая идеальные условия.</p>
+            </div>
+
+            <div class="section">
+                <h2>Блок - Технология памяти</h2>
+
+                <div class="image-container">
+                    <div class="image-placeholder">
+                        <!-- Вставь сюда свою диаграмму мозга -->
+                        <img src="/static/second 2.jpg" alt="Brain Diagram" >
+                    </div>
+                </div>
+
+                <div class="features-list">
+                    <div class="feature-item">
+                        <h3>1. Анонимность</h3>
+                        <p>Сеть сенсоров собирает анонимные<br>
+                            данные: свет, температура, эмоциональная<br>
+                            атмосфера.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>2. Адаптация</h3>
+                        <p>Система начинает плавно подстраиваться<br>
+                            под обнаруженные привычки и хотелки,<br>
+                            превращая их персонализированные<br>
+                            сценарии.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <h3>3. Развитие</h3>
+                        <p>Со временем алгоритмы становятся точнее.<br>
+                            Ваш дом превратится в пространство где<br>
+                            отражены ваши привычки.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>2025 AiHome. Концепт-проект.<br>
+            Вся информация носит ознакомительный<br>
+            характер и может быть изменена.</p>
+    </footer>
+
+    <script>
+        const burger = document.getElementById('burger');
+        const nav = document.getElementById('nav');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
