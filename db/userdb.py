@@ -21,26 +21,28 @@ class User(db.model):
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        action = request.method["action"]
-        user_name = request.method["user_name"]
-        surname = request.method["surname"]
-        phone_number = request.method["phone_number"]
-        password = request.method["password"]
+        action = request.form["action"]
+        user_name = request.form["user_name"]
+        surname = request.form["surname"]
+        phone_number = request.form["phone_number"]
+        password = request.form["password"]
         user = User.query.filter_by(user_name=user_name).first()
         if action == "register":
+                surname = request.get("surname")
+                phone_number = request.get("phone_number")
                 if user:
                     return "Пользователь с таким именем уже существует"
                 hasched_password = check_password_hash(password)
                 new_user = User(user_name=user_name, password=hasched_password, surname=surname, phone_number=phone_number)
                 db.session.add(new_user)
                 db.session.commit()
-                return f"Welcome {user_name}, you have succefully registred!"
+                return f"Welcome {user_name}, you have succesfully registred!"
         elif action == "login":
-            if user and check_password_hash(user.password, password):
-                session["user_name"] == user_name
-                return redirect("about_product.html")
+            if user and generate_password_hash(user.password, password):
+                session["user_name"] = user_name
+                return redirect("/about_product")
             else:
-                print("Wrong user or login!\n Check your text field.")
+                return "Wrong user or login!\n Check your text field."
         else:
-            print("Wrong password") 
+            return "Wrong password"
     return render_template("login.html")
