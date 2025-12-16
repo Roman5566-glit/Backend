@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AiHome - Вход</title>
+    <title>AiHome - Вход / Регистрация</title>
+
     <style>
         * {
             margin: 0;
@@ -26,13 +27,17 @@
         .container {
             max-width: 400px;
             width: 100%;
+            background-color: #111;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .logo-icon {
@@ -41,228 +46,229 @@
             font-style: italic;
         }
 
-        .logo-text {
-            font-size: 24px;
-            font-weight: 500;
-        }
-
         .puzzle-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .puzzle-img {
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
             object-fit: contain;
         }
 
         h1 {
             font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            line-height: 1.4;
+            margin-bottom: 10px;
+            text-align: center;
         }
 
         .description {
             font-size: 14px;
             color: #aaa;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px 16px;
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #555;
-        }
-
-        input::placeholder {
-            color: #666;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        button {
-            flex: 1;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-login {
-            background-color: #fff;
-            color: #000;
-        }
-
-        .btn-login:hover {
-            background-color: #e0e0e0;
-        }
-
-        .btn-register {
-            background-color: #333;
-            color: #fff;
-        }
-
-        .btn-register:hover {
-            background-color: #444;
-        }
-
-        .footer {
+            margin-bottom: 15px;
             text-align: center;
-            margin-top: 50px;
-            font-size: 11px;
-            color: #666;
-            line-height: 1.5;
         }
 
+        /* 🔴 ОШИБКА */
         .error-message {
-            background-color: #ff4444;
-            color: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
             display: none;
+            background: #ff3b3b;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
         }
 
         .error-message.show {
             display: block;
         }
 
-        .additional-fields {
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 50px;
+            color: #fff;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 0;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-login {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-register {
+            background: #333;
+            color: #fff;
+        }
+
+        .register-fields {
             display: none;
         }
 
-        .additional-fields.show {
+        .register-fields.show {
             display: block;
         }
     </style>
 </head>
 
 <body>
+
     <div class="container">
         <div class="logo">
-            <span class="logo-icon">///</span>
-            <span class="logo-text">AiHome</span>
+            <span class="logo-icon">m</span>
+            <span>AiHome</span>
         </div>
 
         <div class="puzzle-container">
-            <!-- Замените "your-image.png" на путь к вашей картинке -->
-            <!-- Например: /static/images/logo.png -->
-            <img src="/static/puzzle_1.jpg" alt="AiHome Logo" class="puzzle-img">
+            <img src="/static/puzzle_1.jpg" class="puzzle-img">
         </div>
 
-        <h1>AiHome - стартап который находится в разработке.</h1>
+        <h1 id="formTitle">Вход в AiHome</h1>
 
-        <p class="description">
-            Если вам дали возможность зайти и увидеть наши планы, то поздравляем вас! Таких есть и будет не
-            много.<br><br>
-            Пожалуйста, введите данные которые вам выслали.
-        </p>
+        <div class="description">
+            AiHome - стартап который находится в разработке
+        </div>
 
-        <div id="errorMessage" class="error-message"></div>
+        <!-- 🔴 БЛОК ОШИБКИ -->
+        <div class="error-message" id="errorMessage"></div>
 
-        <form method="POST" action="/login" id="loginForm">
-            <input type="hidden" name="action" id="action" value="login">
+        <form method="POST" id="mainForm">
+            <input type="hidden" id="action" name="action" value="login">
 
-            <div class="form-group">
-                <label for="user_name">Логин</label>
-                <input type="text" id="user_name" name="user_name" required>
+            <div class="form-group" id="loginField">
+                <label>Логин</label>
+                <input type="text" id="user_name" name="user_name">
             </div>
 
             <div class="form-group">
-                <label for="password">Пароль</label>
-                <input type="password" id="password" name="password" required>
+                <label>Пароль</label>
+                <input type="password" id="password" name="password">
             </div>
 
-            <div class="additional-fields" id="additionalFields">
+            <div class="register-fields" id="registerFields">
                 <div class="form-group">
-                    <label for="surname">Фамилия</label>
+                    <label>Фамилия</label>
                     <input type="text" id="surname" name="surname">
                 </div>
 
                 <div class="form-group">
-                    <label for="phone_number">Номер телефона</label>
-                    <input type="tel" id="phone_number" name="phone_number" placeholder="+7 (999) 999-99-99">
+                    <label>Телефон</label>
+                    <input type="tel" id="phone_number" name="phone_number">
                 </div>
             </div>
 
             <div class="button-group">
-                <button type="submit" class="btn-login" id="loginBtn">Войти</button>
-                <button type="button" class="btn-register" id="registerBtn">Регистрация</button>
+                <button type="submit" class="btn-login" id="submitBtn">Войти</button>
+                <button type="button" class="btn-register" id="toggleBtn">Регистрация</button>
             </div>
         </form>
-
-        <div class="footer">
-            2025 AiHome. Концепт-проект.<br>
-            Вся информация носит ознакомительный<br>
-            характер и может быть изменена.
-        </div>
     </div>
 
     <script>
-        const registerBtn = document.getElementById('registerBtn');
-        const loginBtn = document.getElementById('loginBtn');
-        const additionalFields = document.getElementById('additionalFields');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const registerFields = document.getElementById('registerFields');
+        const loginField = document.getElementById('loginField');
+        const formTitle = document.getElementById('formTitle');
         const actionInput = document.getElementById('action');
-        const form = document.getElementById('loginForm');
-        let isRegisterMode = false;
+        const errorMessage = document.getElementById('errorMessage');
+        const form = document.getElementById('mainForm');
 
-        registerBtn.addEventListener('click', () => {
-            isRegisterMode = !isRegisterMode;
+        let isRegister = false;
 
-            if (isRegisterMode) {
-                additionalFields.classList.add('show');
+        toggleBtn.onclick = () => {
+            isRegister = !isRegister;
+            errorMessage.classList.remove('show');
+
+            if (isRegister) {
+                registerFields.classList.add('show');
+                loginField.style.display = 'none';
+                formTitle.textContent = 'Регистрация в AiHome';
+                submitBtn.textContent = 'Зарегистрироваться';
+                toggleBtn.textContent = 'Отмена';
                 actionInput.value = 'register';
-                registerBtn.textContent = 'Отмена';
-                loginBtn.textContent = 'Зарегистрироваться';
-
-                // Делаем доп. поля обязательными
-                document.getElementById('surname').required = true;
-                document.getElementById('phone_number').required = true;
             } else {
-                additionalFields.classList.remove('show');
+                registerFields.classList.remove('show');
+                loginField.style.display = 'block';
+                formTitle.textContent = 'Вход в AiHome';
+                submitBtn.textContent = 'Войти';
+                toggleBtn.textContent = 'Регистрация';
                 actionInput.value = 'login';
-                registerBtn.textContent = 'Регистрация';
-                loginBtn.textContent = 'Войти';
+            }
+        };
 
-                // Убираем обязательность доп. полей
-                document.getElementById('surname').required = false;
-                document.getElementById('phone_number').required = false;
+        form.addEventListener('submit', (e) => {
+            errorMessage.classList.remove('show');
+            errorMessage.textContent = '';
+
+            const password = document.getElementById('password').value.trim();
+
+            if (!password) {
+                showError('Введите пароль');
+                e.preventDefault();
+                return;
+            }
+
+            if (!isRegister) {
+                const login = document.getElementById('user_name').value.trim();
+                if (!login) {
+                    showError('Введите логин');
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+            if (isRegister) {
+                const surname = document.getElementById('surname').value.trim();
+                const phone = document.getElementById('phone_number').value.replace(/\D/g, '');
+
+                if (!surname) {
+                    showError('Введите фамилию');
+                    e.preventDefault();
+                    return;
+                }
+
+                if (phone.length < 10) {
+                    showError('Введите корректный номер телефона');
+                    e.preventDefault();
+                    return;
+                }
             }
         });
+
+        function showError(text) {
+            errorMessage.textContent = 'Ошибка: ' + text;
+            errorMessage.classList.add('show');
+        }
     </script>
+
 </body>
 
 </html>

@@ -1,0 +1,42 @@
+б<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AiHome - Вход</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <span class="logo-icon">///</span>
+            <span class="logo-text">AiHome</span>
+        </div>
+
+        <h1>Вход в AiHome</h1>
+
+        {% if error %}
+        <div class="error-message show">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="user_name">Логин</label>
+                <input type="text" id="user_name" name="user_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-login">Войти</button>
+                <a href="/register"><button type="button" class="btn-register">Регистрация</button></a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
